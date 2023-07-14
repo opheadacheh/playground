@@ -1,0 +1,11 @@
+load("@io_bazel_rules_go//go:defs.bzl", "go_binary")
+
+go_binary(
+    name = "server",
+    srcs = ["main.go"],
+    importpath = "project/server",
+    deps = [
+        "//proto:helloworld_go_proto",
+        "@com_github_grpc_grpc_go//grpc",
+    ],
+)

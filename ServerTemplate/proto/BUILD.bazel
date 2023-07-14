@@ -1,0 +1,13 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_proto_grpc//language/go:defs.bzl", "go_proto_library")
+
+proto_library(
+    name = "helloworld_proto",
+    srcs = ["helloworld.proto"],
+)
+
+go_proto_library(
+    name = "helloworld_go_proto",
+    importpath = "project/proto",
+    proto = ":helloworld_proto",
+)
