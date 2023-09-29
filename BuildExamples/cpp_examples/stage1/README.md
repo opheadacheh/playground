@@ -14,7 +14,7 @@ cc_binary(
 
 To build this example, use
 ```
-bazel build //main:hello-world
+bazelisk build //main:hello-world
 ```
 
 If the build is successful, Bazel prints the output similar to
@@ -35,7 +35,7 @@ is a useful technique for use in scripts, where you do not want to parse the
 `bazel build` output.
 
 ```
-bazel cquery --output=starlark \
+bazelisk cquery --output=starlark \
   --starlark:expr="' '.join([f.path for f in target.files.to_list()])" \
   //main:hello-world
 ```

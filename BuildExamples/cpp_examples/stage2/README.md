@@ -26,5 +26,5 @@ cc_binary(
 
 To build this example, use
 ```
-bazel build //main:hello-world
+bazelisk build //main:hello-world
 ```
