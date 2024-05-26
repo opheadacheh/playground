@@ -1,0 +1,18 @@
+<!--pages/main/main.wxml-->
+<view class="inputContainer">
+    <view class="inputBlock" wx:for="{{inputBlocks}}" wx:key="key">
+        <button class="inputAddButton" data-index="{{index}}" bindtap="onAddButtonTapped" size="mini">
+            +
+        </button>
+        <input class="inputTextArea" bindinput="onInputValueChanged" data-index="{{index}}" maxlength="100" placeholder="{{item.placeHolder}}" />
+        <button class="inputDeleteButton" wx:if="{{inputBlocksLength > 1}}" data-index="{{index}}" bindtap="onDeleteButtonTapped" size="mini">
+            -
+        </button>
+    </view>
+</view>
+<button class="goButton" bindtap="onGoButtonTapped" size="default" style="width: 60%; font-size: 16px !important;">
+    Go
+</button>
+<button class="chooseLocationButton" bindtap="onChooseLocationTapped" size="default" style="width: 60%; font-size: 16px !important;">
+    选择一个出发位置
+</button>

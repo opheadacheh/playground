@@ -1,0 +1,58 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_tarball")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+go_library(
+    name = "server_lib",
+    srcs = ["main.go"],
+    importpath = "route_plan/server",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//server/proto/service",
+        "//server/service",
+        "//server/utils",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//runtime:go_default_library",
+        "@org_golang_google_grpc//:go_default_library",
+        "@org_golang_google_grpc//credentials/insecure:go_default_library",
+    ],
+)
+
+go_binary(
+    name = "server",
+    embed = [":server_lib"],
+    visibility = ["//visibility:public"],
+)
+
+# Put go_binary into a tar layer.
+pkg_tar(
+    name = "app_layer",
+    srcs = [":server"],
+    # If the binary depends on RUNFILES, uncomment the attribute below.
+    # include_runfiles = True
+)
+
+oci_image(
+    name = "image",
+    base = "@ubuntu_22_04",
+    entrypoint = ["/server"],
+    tars = [":app_layer"],
+)
+
+# This is the target that should be released to the target platform
+platform_transition_filegroup(
+    name = "transitioned_image",
+    srcs = [":image"],
+    tags = ["manual"],
+    target_platform = select({
+        "@platforms//cpu:arm64": "@rules_go//go/toolchain:linux_arm64",
+        "@platforms//cpu:x86_64": "@rules_go//go/toolchain:linux_amd64",
+    }),
+)
+
+oci_tarball(
+    name = "tarball",
+    # Use the image built for the exec platform rather than the target platform
+    image = ":image",
+    repo_tags = ["registry.jihulab.com/opheadacheh/playground/route_plan_server:20231110.1"],
+)

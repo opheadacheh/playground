@@ -1,0 +1,38 @@
+# gazelle:ignore
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_proto_grpc//grpc-gateway:defs.bzl", "gateway_grpc_library", "gateway_openapiv2_compile")
+
+proto_library(
+    name = "service_proto",
+    srcs = ["service.proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//server/proto/common:common_proto",
+        "//server/proto/route:route_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+gateway_grpc_library(
+    name = "service_go_proto",
+    importpath = "route_plan/server/proto/service",
+    protos = ["service_proto"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//server/proto/common",
+        "//server/proto/route",
+    ],
+)
+
+gateway_openapiv2_compile(
+    name = "service_openapiv2",
+    protos = ["service_proto"],
+)
+
+go_library(
+    name = "service",
+    embed = [":service_go_proto"],
+    importpath = "route_plan/server/proto/service",
+    visibility = ["//visibility:public"],
+)

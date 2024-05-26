@@ -1,0 +1,19 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "utils",
+    srcs = [
+        "gaode_client.go",
+        "location_interface.go",
+    ],
+    importpath = "route_plan/server/utils",
+    visibility = ["//visibility:public"],
+    deps = ["//server/proto/common"],
+)
+
+go_test(
+    name = "utils_test",
+    srcs = ["gaode_client_test.go"],
+    embed = [":utils"],
+    deps = ["//server/proto/common"],
+)

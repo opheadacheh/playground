@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "route_plan/server/proto/common";
+
+message GpsInfo {
+    double longitude = 1;
+    double latitude = 2;
+}

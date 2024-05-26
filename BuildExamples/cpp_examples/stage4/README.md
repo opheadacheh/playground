@@ -33,3 +33,10 @@ To build this example, use
 ```
 bazelisk build //main:hello-world
 ```
+
+To run code coverage, use
+```
+bazelisk coverage --combined_report=lcov //lib:hello-time-test
+
+genhtml {path_of_dat_file}
+```

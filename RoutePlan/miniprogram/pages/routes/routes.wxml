@@ -1,0 +1,17 @@
+<!--pages/routes/routes.wxml-->
+<view class="routes" wx:for="{{routes}}">
+    <view class="route" data-index="{{index}}" bind:tap="onRouteTapped">
+        <view class="routeTag">
+            {{item.tag}}
+        </view>
+        
+        <view class="businessInfo" wx:for="{{item.businesses}}">
+            <view>
+                {{item.name}}
+            </view>
+            <view class="businessInfo.ratingsAndCost">
+                评分: {{item.rating}} 人均: {{item.cost}}
+            </view>
+        </view>
+    </view>
+</view>

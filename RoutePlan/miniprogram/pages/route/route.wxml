@@ -1,0 +1,11 @@
+<!--pages/route/route.wxml-->
+<view class="businessInfo" wx:for="{{businesses}}">
+    <view>
+        {{item.name}}
+    </view>
+    <view class="navigationOptions">
+        <view class="navigationOption" data-index="{{index}}" bind:tap="onViewInfoTapped">
+            在地图上打开
+        </view>
+    </view>
+</view>

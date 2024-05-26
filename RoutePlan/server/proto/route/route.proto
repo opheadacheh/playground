@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package route;
+
+option go_package = "route_plan/server/proto/route";
+
+import "server/proto/common/common.proto";
+
+enum RouteTag {
+    UNKNOWN = 0;
+    LEAST_EXPENSIVE = 1;
+    HIGHEST_RATING = 2;
+}
+
+message StopPoint {
+    string name = 1;
+
+    string rating = 2;
+
+    string cost = 3;
+
+    common.GpsInfo gps_info = 4;
+}
+
+message RouteInfo {
+    RouteTag route_tag = 1;
+
+    repeated StopPoint stop_points = 2;
+}

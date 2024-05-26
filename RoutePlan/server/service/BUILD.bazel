@@ -1,0 +1,17 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "service",
+    srcs = [
+        "plan_route.go",
+        "server.go",
+    ],
+    importpath = "route_plan/server/service",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//server/proto/common",
+        "//server/proto/route",
+        "//server/proto/service",
+        "//server/utils",
+    ],
+)

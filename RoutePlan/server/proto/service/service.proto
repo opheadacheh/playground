@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package route_plan;
+
+option go_package = "route_plan/server/proto/service";
+
+import "google/api/annotations.proto";
+
+import "server/proto/common/common.proto";
+import "server/proto/route/route.proto";
+
+service RoutePlan {
+  rpc PlanRoute (PlanRouteRequest) returns (PlanRouteResponse) {
+    option (google.api.http) = {
+      post: "/v1/planRoute"
+      body: "*"
+    };
+  }
+}
+
+message PlanRouteRequest {
+  common.GpsInfo gps_info = 1;
+
+  repeated string keywords = 2;
+}
+
+message PlanRouteResponse {
+  repeated route.RouteInfo route_infos = 1;
+}
