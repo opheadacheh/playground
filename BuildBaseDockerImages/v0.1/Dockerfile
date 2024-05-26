@@ -1,4 +1,7 @@
-FROM registry.jihulab.com/opheadacheh/playground/bazel_build_base:0.0
+FROM ghcr.io/opheadacheh/bazel_build_base:0.0
+
+ENV http_proxy http://127.0.0.1:7890
+ENV https_proxy http://127.0.0.1:7890
 
 RUN sudo apt-get install tree -y
 

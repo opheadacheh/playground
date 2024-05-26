@@ -1,5 +1,8 @@
 FROM ubuntu:22.04
 
+ENV http_proxy http://127.0.0.1:7890
+ENV https_proxy http://127.0.0.1:7890
+
 # switch ubuntu sources list to aliyun
 RUN printf "deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse\n\
 deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse\n\
