@@ -1,24 +1,17 @@
 FROM ubuntu:22.04
 
-ENV http_proxy http://127.0.0.1:7890
-ENV https_proxy http://127.0.0.1:7890
-
 # switch ubuntu sources list to aliyun
-RUN printf "deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse\n\
-deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse\n\
-deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse\n\
-deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse\n\
-deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse\n\
-deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse\n" > /etc/apt/sources.list
+RUN printf "deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse\n\
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse\n\
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse\n" > /etc/apt/sources.list
 
 # install essential tools
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install sudo vim openjdk-11-jdk wget git unzip build-essential -y
+RUN apt update
+RUN apt install ca-certificates -y
+RUN apt update
+RUN apt upgrade -y
+RUN apt install sudo vim openjdk-11-jdk wget git unzip build-essential curl -y
 
 # setup basic environment variables
 ENV PATH="$PATH:$HOME/bin"
